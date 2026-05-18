@@ -34,9 +34,10 @@ export const useChat = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
-      if (data.messages) {
-        setMessages(data.messages);
-      }
+      if (Array.isArray(data)) {
+     setMessages(data);
+
+     }
     } catch (err) {
       console.error("Failed to load history:", err);
     }
