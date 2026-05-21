@@ -1,59 +1,41 @@
 // src/components/Layout/Navbar.jsx — Top Navigation Bar
 // Shows the app logo, user email, and logout button.
+import { motion } from 'framer-motion'
+import { Sparkles } from 'lucide-react'
 
-import React from "react";
-import { useAuth } from "../../context/AuthContext";
-
-const Navbar = ({ onClearChat }) => {
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
-
+const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between px-4 py-3 border-b border-gray-800 bg-gray-950/80 backdrop-blur-sm sticky top-0 z-10">
-      {/* Logo */}
-      <div className="flex items-center gap-2">
-        {/* AI Icon */}
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-gray-950 font-bold text-sm">
-          AI
+    <motion.div
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/30 backdrop-blur-xl"
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-500 shadow-lg shadow-violet-500/20">
+            <Sparkles size={20} />
+          </div>
+
+          <div>
+            <h1 className="text-xl font-semibold tracking-tight">Zeta</h1>
+            <p className="text-xs text-gray-400">
+              AI Assistant Platform
+            </p>
+             </div>
         </div>
-        <span className="font-semibold text-white text-lg tracking-tight">
-          ChatBot
-        </span>
+
+        <div className="hidden md:flex items-center gap-3">
+          <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
+            API Online
+          </div>
+
+          <button className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm transition hover:bg-white/10">
+            Upgrade
+          </button>
+        </div>
       </div>
+    </motion.div>
+  )
+}
 
-      {/* Right side actions */}
-      <div className="flex items-center gap-3">
-        {/* Clear chat button */}
-        <button
-          onClick={onClearChat}
-          className="text-xs text-gray-400 hover:text-white transition-colors px-2 py-1 rounded hover:bg-gray-800"
-          title="Clear chat history"
-        >
-          Clear Chat
-        </button>
-
-        {/* User email (truncated on mobile) */}
-        <span className="hidden sm:block text-xs text-gray-500 max-w-[150px] truncate">
-          {user?.email}
-        </span>
-
-        {/* Logout button */}
-        <button
-          onClick={handleLogout}
-          className="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white px-3 py-1.5 rounded-lg transition-all"
-        >
-          Logout
-        </button>
-      </div>
-    </nav>
-  );
-};
-
-export default Navbar;
+export default Navbar

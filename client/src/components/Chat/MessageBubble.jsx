@@ -1,51 +1,43 @@
 // src/components/Chat/MessageBubble.jsx — Individual Message
 // Renders a single chat message differently for "user" vs "assistant".
 
-import React from "react";
-import ReactMarkdown from "react-markdown";
+import { motion } from 'framer-motion'
+import ReactMarkdown from 'react-markdown'
+import { Bot, User } from 'lucide-react'
 
 const MessageBubble = ({ message }) => {
-  const isUser = message.role === "user";
+  const isUser = message.role === 'user'
 
   return (
-    <div
-      className={`flex items-end gap-2 animate-fade-in-up ${
-        isUser ? "flex-row-reverse" : "flex-row"
-      }`}
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className={`flex w-full gap-4 ${isUser ? 'justify-end' : 'justify-start'}`}
     >
-      {/* Avatar */}
+      {!isUser && (
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-500 shadow-lg shadow-violet-500/20">
+          <Bot size={18} />
+        </div>
+      )}
+
       <div
-        className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
+        className={`message-enter max-w-[82%] rounded-3xl px-5 py-4 text-[15px] leading-7 shadow-xl ${
           isUser
-            ? "bg-emerald-500 text-gray-950"
-            : "bg-gradient-to-br from-cyan-500 to-blue-600 text-white"
+            ? 'bg-gradient-to-br from-violet-600 to-indigo-600 text-white'
+            : 'glass text-gray-100'
         }`}
       >
-        {isUser ? "U" : "AI"}
+        <ReactMarkdown>{message.content}</ReactMarkdown>
       </div>
 
-      {/* Message bubble */}
-      <div
-        className={`max-w-[75%] sm:max-w-[65%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
-          isUser
-            ? // User: right side, green tint
-              "bg-emerald-600/20 text-emerald-50 border border-emerald-700/30 rounded-br-sm"
-            : // AI: left side, dark gray
-              "bg-gray-800/80 text-gray-100 border border-gray-700/50 rounded-bl-sm"
-        }`}
-      >
-        {isUser ? (
-          // User messages: plain text
-          <p className="whitespace-pre-wrap">{message.content}</p>
-        ) : (
-          // AI messages: render Markdown (code blocks, bold, lists, etc.)
-          <div className="prose-chat">
-            <ReactMarkdown>{message.content}</ReactMarkdown>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
+      {isUser && (
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 border border-white/10">
+          <User size={18} />
+        </div>
+      )}
+    </motion.div>
+  )
+}
 
-export default MessageBubble;
+export default MessageBubble

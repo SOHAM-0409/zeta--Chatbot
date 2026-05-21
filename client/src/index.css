@@ -1,45 +1,64 @@
 /* src/index.css — Global Styles */
 
 /* Tailwind base, component, and utility layers */
-@tailwind base;
+@@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Custom Scrollbar ──────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 5px;
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #070b14;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(139, 92, 246, 0.18), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.18), transparent 30%),
+    #070b14;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #4b5563;
-  border-radius: 10px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 999px;
 }
 
-/* ── Base Body Styles ──────────────────────────────────── */
-body {
-  @apply bg-gray-950 text-gray-100 font-sans antialiased;
-  margin: 0;
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* ── Typing Indicator Dots ────────────────────────────── */
-.typing-dot:nth-child(1) { animation-delay: 0s; }
-.typing-dot:nth-child(2) { animation-delay: 0.2s; }
-.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+.message-enter {
+  animation: fadeUp 0.25s ease;
+}
 
-/* ── Markdown Prose Styles ────────────────────────────── */
-.prose-chat p { margin: 0.25rem 0; }
-.prose-chat code {
-  @apply bg-gray-800 text-emerald-400 px-1.5 py-0.5 rounded text-sm font-mono;
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.prose-chat pre {
-  @apply bg-gray-900 p-3 rounded-lg overflow-x-auto my-2;
-}
-.prose-chat pre code {
-  @apply bg-transparent p-0;
-}
-.prose-chat ul { @apply list-disc pl-5; }
-.prose-chat ol { @apply list-decimal pl-5; }
-.prose-chat li { @apply my-1; }
-.prose-chat strong { @apply font-semibold text-white; }
