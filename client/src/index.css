@@ -1,7 +1,7 @@
 /* src/index.css — Global Styles */
 
 /* Tailwind base, component, and utility layers */
-@@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
